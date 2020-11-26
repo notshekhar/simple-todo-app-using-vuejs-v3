@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app">
         <div
             :class="{
                 loading: reminderState.loading,
@@ -13,14 +13,20 @@
 </template>
 
 <script>
+import "./styles/style.css"
 import NewReminder from "./components/NewReminder.vue"
 import RemindersFiled from "./components/RemindersFiled.vue"
 import { reminderState } from "./states"
+import { onMounted } from "vue"
 export default {
     setup() {
-        let reminders = localStorage.getItem("reminders")
-        reminderState.reminders = reminders ? JSON.parse(reminders) : []
-        reminderState.loading = false
+        onMounted(() => {
+            let reminders = localStorage.getItem("reminders")
+            reminderState.reminders = reminders ? JSON.parse(reminders) : []
+            setTimeout(() => {
+                reminderState.loading = false
+            }, 400)
+        })
         return {
             NewReminder,
             RemindersFiled,
